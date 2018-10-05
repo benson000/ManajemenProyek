@@ -40,6 +40,38 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="type" class="col-sm-4 col-form-label text-md-right">{{ __('Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select type="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }}">
+                                    <option value="m">Mahasiswa</option>
+                                    <option value="o">Ormawa</option>
+                                    <option value="d">Dosen</option>
+                                </select>
+
+                                @if ($errors->has('nim'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('nim') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="nim" class="col-sm-4 col-form-label text-md-right">{{ __('NIM') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="nim" type="text" class="form-control{{ $errors->has('nim') ? ' is-invalid' : '' }}" name="nim" value="{{ old('nim') }}" required autofocus>
+
+                                @if ($errors->has('nim'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('nim') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">

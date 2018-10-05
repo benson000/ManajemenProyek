@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Admin Page Manajemen Proyek</title>
 </head>
 <body>
 @extends('adminlte::page')

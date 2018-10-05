@@ -24,6 +24,6 @@ class participants extends Model
     ];
 
     public function events(){
-    	$this->belongsTo('App\events');
+    	return $this->belongsTo('App\events');
     }
 }
