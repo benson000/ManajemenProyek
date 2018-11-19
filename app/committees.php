@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class committees extends Model
 {
-	use Notifiable;
-	
     protected $table = 'committees';
-    protected $primaryKey = 'id_events'
+    protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillAble = [
+    protected $fillable = [
         'id_events',
 
         'jabatan', 
-        'id_user', 
+        'id_user',
+        'password',
+        'nama',
 
         'tanggung_jawab'
     ];

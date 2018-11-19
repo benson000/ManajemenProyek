@@ -35,7 +35,32 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('activities.index') }}">{{ __('Aktivitas') }}</a>
+                            <a class="nav-link" href="{{ route('activities.index') }}">
+                                {{ __('Aktivitas') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('budgets.index') }}">
+                                {{ __('Budgets') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categories.index') }}">
+                                {{ __('Categories') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('committees.index') }}">
+                                {{ __('Committees') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('events.index') }}">
+                                {{ __('Events') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('participants.index') }}">{{ __('Participants') }}</a>
                         </li>
                     </ul>
 

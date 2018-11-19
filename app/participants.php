@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class participants extends Model
 {
     protected $table = 'participants'; //schema::create
-    protected $primaryKey = 'id_events'
+    protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillAble = [
+    protected $fillable = [
         'id_events',
+        'id_peserta',
+        'password',
         'nama', 
         'keterangan'
     ];

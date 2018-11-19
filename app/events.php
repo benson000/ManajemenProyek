@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class events extends Model
 {
     protected $table = 'events';
-    protected $primaryKey = 'id_user';
     public $timestamps = true;
-    protected $fillAble = [
-        'id_user',
+    protected $fillable = [
+        'id_events',
+        'name',
 
         'start_date', 
         'end_date', 
@@ -27,7 +27,6 @@ class events extends Model
         //default timestamps 
         'created_at', 
         'updated_at', 
-        'deleted_at'
     ];
 
     //up

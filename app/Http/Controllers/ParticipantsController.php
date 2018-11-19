@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\activities;
+use App\participants;
 
-class ActivitiesController extends Controller
+class ParticipantsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        $activities = \App\activities::all();
+        $participants = \App\participants::all();
 
-        return view('activities.index', compact('activities'));
+        return view('participants.index', compact('participants'));
     }
 
     /**
@@ -27,7 +27,7 @@ class ActivitiesController extends Controller
     public function create()
     {
         $events = \App\events::all();
-        return view('activities.insert', compact('events'));
+        return view('participants.insert', compact('events'));
     }
 
     /**
@@ -40,24 +40,25 @@ class ActivitiesController extends Controller
     {
         //validasi
         $request->validate([
-            'name' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'id_events' => 'required',
+            'id_peserta' => 'required',
+            'password' => 'required',
+            'nama' => 'required',
             'keterangan' => 'required',
         ]);
 
         //insert
-        $activities = new activities([
+        $participants = new participants([
             'id_events' => $request->get('id_events'),
-            'name' => $request->get('name'),
-            'start_date' => $request->get('start_date'),
-            'end_date' => $request->get('end_date'),
+            'id_peserta' => $request->get('id_peserta'),
+            'nama' => $request->get('nama'),
+            'password' => $request->get('password'),
             'keterangan' => $request->get('keterangan')
         ]);
 
-        $activities->save();
+        $participants->save();
 
-        return redirect('activities')->with('success', 'Aktivitas baru ditambahkan');
+        return redirect('participants')->with('success', 'Peserta baru ditambahkan');
     }
 
     /**
@@ -79,10 +80,10 @@ class ActivitiesController extends Controller
      */
     public function edit($id)
     {
-        $activities = activities::find($id);
+        $participants = participants::find($id);
         $events = \App\events::all();
 
-        return view('activities.edit', compact('activities', 'events'));
+        return view('participants.edit', compact('participants', 'events'));
     }
 
     /**
@@ -96,23 +97,24 @@ class ActivitiesController extends Controller
     {
         //validasi
         $request->validate([
-            'name' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'id_events' => 'required',
+            'id_peserta' => 'required',
+            'password' => 'required',
+            'nama' => 'required',
             'keterangan' => 'required',
         ]);
 
         //collecting the data
-        $activities = activities::find($id);
-        $activities->id_events = $request->get('id_events');
-        $activities->name = $request->get('name');
-        $activities->start_date = $request->get('start_date');
-        $activities->end_date = $request->get('end_date');
-        $activities->keterangan = $request->get('keterangan');
+        $participants = participants::find($id);
+        $participants->id_events = $request->get('id_events');
+        $participants->id_peserta = $request->get('id_peserta');
+        $participants->password = $request->get('password');
+        $participants->nama = $request->get('nama');
+        $participants->keterangan = $request->get('keterangan');
 
-        $activities->save(); //save data
+        $participants->save();
 
-        return redirect('/activities')->with('success', 'Aktivitas berhasil diedit');
+        return redirect('participants')->with('success', 'Peserta berhasil diedit');
     }
 
     /**
@@ -123,9 +125,9 @@ class ActivitiesController extends Controller
      */
     public function destroy($id)
     {
-        $activities = activities::find($id);
-        $activities->delete();
+        $participants = participants::find($id);
+        $participants->delete();
 
-        return redirect('activities')->with('success', 'Aktivitas sudah berhasil dihapus');
+        return redirect('participants')->with('success', 'Peserta sudah berhasil dihapus');
     }
 }

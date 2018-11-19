@@ -24,5 +24,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
+	//all crud controller
 	Route::resource('/activities', 'ActivitiesController');
+	Route::resource('/budgets', 'BudgetsController');
+	Route::resource('/categories', 'CategoriesController');
+	Route::resource('/committees', 'CommitteesController');
+	Route::resource('/events', 'EventsController');
+	Route::resource('/participants', 'ParticipantsController');
 });

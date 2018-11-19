@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\activities;
+use App\events;
 
-class ActivitiesController extends Controller
+class EventsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        $activities = \App\activities::all();
+        $events = \App\events::all();
 
-        return view('activities.index', compact('activities'));
+        return view('events.index', compact('events'));
     }
 
     /**
@@ -26,8 +26,9 @@ class ActivitiesController extends Controller
      */
     public function create()
     {
-        $events = \App\events::all();
-        return view('activities.insert', compact('events'));
+        $categories = \App\categories::all();
+
+        return view('events.insert', compact('categories'));
     }
 
     /**
@@ -40,24 +41,37 @@ class ActivitiesController extends Controller
     {
         //validasi
         $request->validate([
+            'id_events' => 'required',
             'name' => 'required',
+
             'start_date' => 'required',
             'end_date' => 'required',
-            'keterangan' => 'required',
+
+            'place' => 'required',
+            'theme' => 'required',
+            'category' => 'required',
+
+            'tujuan' => 'required'
         ]);
 
         //insert
-        $activities = new activities([
+        $events = new events([
             'id_events' => $request->get('id_events'),
             'name' => $request->get('name'),
+
             'start_date' => $request->get('start_date'),
             'end_date' => $request->get('end_date'),
-            'keterangan' => $request->get('keterangan')
+
+            'place' => $request->get('place'),
+            'theme' => $request->get('theme'),
+            'category' => $request->get('category'),
+
+            'tujuan' => $request->get('tujuan')
         ]);
 
-        $activities->save();
+        $events->save();
 
-        return redirect('activities')->with('success', 'Aktivitas baru ditambahkan');
+        return redirect('events')->with('success', 'Event baru ditambahkan');
     }
 
     /**
@@ -68,7 +82,7 @@ class ActivitiesController extends Controller
      */
     public function show($id)
     {
-        //
+        route('events.edit', $evt->id);
     }
 
     /**
@@ -79,10 +93,10 @@ class ActivitiesController extends Controller
      */
     public function edit($id)
     {
-        $activities = activities::find($id);
-        $events = \App\events::all();
+        $events = events::find($id);
+        $categories = \App\categories::all();
 
-        return view('activities.edit', compact('activities', 'events'));
+        return view('events.edit', compact('events', 'categories'));
     }
 
     /**
@@ -96,23 +110,37 @@ class ActivitiesController extends Controller
     {
         //validasi
         $request->validate([
+            'id_events' => 'required',
             'name' => 'required',
+
             'start_date' => 'required',
             'end_date' => 'required',
-            'keterangan' => 'required',
+
+            'place' => 'required',
+            'theme' => 'required',
+            'category' => 'required',
+
+            'tujuan' => 'required'
         ]);
 
         //collecting the data
-        $activities = activities::find($id);
-        $activities->id_events = $request->get('id_events');
-        $activities->name = $request->get('name');
-        $activities->start_date = $request->get('start_date');
-        $activities->end_date = $request->get('end_date');
-        $activities->keterangan = $request->get('keterangan');
+        $events = events::find($id);
 
-        $activities->save(); //save data
+        $events->id_events = $request->get('id_events');
+        $events->name = $request->get('name');
 
-        return redirect('/activities')->with('success', 'Aktivitas berhasil diedit');
+        $events->start_date = $request->get('start_date');
+        $events->end_date = $request->get('end_date');
+
+        $events->place = $request->get('place');
+        $events->theme = $request->get('theme');
+        $events->category = $request->get('category');
+
+        $events->tujuan = $request->get('tujuan');
+
+        $events->save(); //save data
+
+        return redirect('/events')->with('success', 'Event berhasil diedit');
     }
 
     /**
@@ -123,9 +151,9 @@ class ActivitiesController extends Controller
      */
     public function destroy($id)
     {
-        $activities = activities::find($id);
-        $activities->delete();
+        $events = events::find($id);
+        $events->delete();
 
-        return redirect('activities')->with('success', 'Aktivitas sudah berhasil dihapus');
+        return redirect('events')->with('success', 'Event sudah berhasil dihapus');
     }
 }

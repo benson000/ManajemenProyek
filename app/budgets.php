@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class budgets extends Model
 {
     protected $table = 'budgets';
-    protected $primaryKey = 'id_events'
+    protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillAble = [
+    protected $fillable = [
         'id_events', 
         'keterangan',
         'saldo'
