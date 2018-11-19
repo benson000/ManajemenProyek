@@ -2,9 +2,11 @@
 
 @section('content')
 <div class="container">
-	<div class="alert alert-success">
-		{{ session()->get('success') }}  
-	</div><br/>
+	@if(session()->get('success'))
+		<div class="alert alert-success">
+			{{ session()->get('success') }}  
+		</div><br/>
+	@endif
 	<div class="row">
 		<table class="table">
 			<thead class="thead-dark">
