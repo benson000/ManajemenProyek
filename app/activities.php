@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class activities extends Model
 {
     protected $table = 'activities';
-    protected $primaryKey = 'id_events'
+    
     public $timestamps = true;
-    protected $fillAble = [
+    public $fillable = [
         'id_events',
+        'name',
 
         'start_date', 
         'end_date', 

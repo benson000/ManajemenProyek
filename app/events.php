@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class events extends Model
 {
-	use Notifiable;
-
     protected $table = 'events';
-    protected $primaryKey = 'id_user'
+    protected $primaryKey = 'id_user';
     public $timestamps = true;
     protected $fillAble = [
         'id_user',
@@ -51,7 +49,7 @@ class events extends Model
     }
 
     public function committees(){
-    	return $this->hasMany('App\committees')
+    	return $this->hasMany('App\committees');
     }
 
     public function Users(){
