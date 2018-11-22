@@ -51,8 +51,19 @@ class EventsController extends Controller
             'theme' => 'required',
             'category' => 'required',
 
-            'tujuan' => 'required'
+            'tujuan' => 'required',
+            'approval' => 'required',
+
+            'proposal' => 'required|mimes:pdf|max:40000'
         ]);
+
+        //get image name and store in local
+        $file_request = $request->file('proposal');
+        $fileName = $file_request->getClientOriginalName(); //get name
+        $file_request->move(
+            public_path('/UploadedFiles'), 
+            $fileName
+        );
 
         //insert
         $events = new events([
@@ -66,7 +77,9 @@ class EventsController extends Controller
             'theme' => $request->get('theme'),
             'category' => $request->get('category'),
 
-            'tujuan' => $request->get('tujuan')
+            'tujuan' => $request->get('tujuan'),
+            'approval' => 'BELUM DISETUJUI', //default
+            'proposal' => $fileName
         ]);
 
         $events->save();
@@ -120,23 +133,38 @@ class EventsController extends Controller
             'theme' => 'required',
             'category' => 'required',
 
-            'tujuan' => 'required'
+            'tujuan' => 'required',
+            'approval' => 'required'
         ]);
 
         //collecting the data
         $events = events::find($id);
 
-        $events->id_events = $request->get('id_events');
-        $events->name = $request->get('name');
+        $events->id_events = $request->input('id_events');
+        $events->name = $request->input('name');
 
-        $events->start_date = $request->get('start_date');
-        $events->end_date = $request->get('end_date');
+        $events->start_date = $request->input('start_date');
+        $events->end_date = $request->input('end_date');
 
-        $events->place = $request->get('place');
-        $events->theme = $request->get('theme');
-        $events->category = $request->get('category');
+        $events->place = $request->input('place');
+        $events->theme = $request->input('theme');
+        $events->category = $request->input('category');
 
-        $events->tujuan = $request->get('tujuan');
+        $events->tujuan = $request->input('tujuan');
+        $events->approval = $request->input('approval');
+
+        if($request->hasFile('proposal')){
+            //get image name and store in local
+            $file_request = $request->file('proposal');
+            $fileName = $file_request->getClientOriginalName(); //get name
+            $file_request->move(
+                public_path('/UploadedFiles'), 
+                $fileName
+            );
+
+            //store to array
+            $events->proposal = $fileName;
+        }
 
         $events->save(); //save data
 

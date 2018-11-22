@@ -18,8 +18,10 @@
 				<th scope="col">Tema Acara</th>
 				<th scope="col">Kategori</th>
 				<th scope="col">Tujuan</th>
+				<th scope="col">Proposal</th>
+				<th scope="col">Approval</th>
 
-				<th scope="col" colspan="2">Actions</th>
+				<th scope="col" colspan="3">Actions</th>
 			</thead>
 			<tbody>
 			@foreach($events as $key => $evt)
@@ -32,7 +34,35 @@
 					<td>{{ $evt->theme }}</td>
 					<td>{{ $evt->category }}</td>
 					<td>{{ $evt->tujuan }}</td>
+					<td>{{ $evt->proposal }}</td>
+					<td>{{ $evt->approval }}</td>
 
+					<td>
+						<form action="{{ route('events.update', $evt->id) }}" method="post">
+							{{-- PROTECTION TOKEN --}}
+                  			@csrf
+                  			@method('PATCH')
+                  			{{-- PROTECTION TOKEN --}}
+							
+							<!-- EDIT -->
+							<input type="hidden" name="id_events" value="{{ $evt->id_events }}">
+							<input type="hidden" name="name" value="{{ $evt->name }}">
+							<input type="hidden" name="start_date" value="{{ $evt->start_date }}">
+							<input type="hidden" name="end_date" value="{{ $evt->end_date }}">
+							<input type="hidden" name="place" value="{{ $evt->place }}">
+							<input type="hidden" name="theme" value="{{ $evt->theme }}">
+							<input type="hidden" name="category" value="{{ $evt->category }}">
+							<input type="hidden" name="tujuan" value="{{ $evt->tujuan }}">
+							<input type="hidden" name="proposal" value="{{ $evt->proposal }}">
+							<input type="hidden" name="approval" value="DISETUJUI">
+							
+							<?php if($evt->approval != "DISETUJUI"){
+								?>
+								<button type="submit" class="btn btn-success">Setujui</button>
+								<?php
+							} ?>
+						</form>
+					</td>
 					<td>
 						<a href="{{ route('events.edit', $evt->id)}}" class="btn btn-primary">Edit</a>
 					</td>

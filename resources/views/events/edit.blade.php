@@ -16,7 +16,7 @@
       </div><br />
     @endif
       	<div class="container">
-  			<form method="post" action="{{ route('events.update', $events->id) }}">
+  			<form method="post" action="{{ route('events.update', $events->id) }}" enctype="multipart/form-data">
 				{{-- PROTECTION TOKEN --}}
 	      		@csrf
 	      		@method('PATCH')
@@ -64,6 +64,13 @@
 	              	<label for="name">Tujuan:</label>
 	              	<input type="text" class="form-control" name="tujuan" value="{{ $events->tujuan }}" required/>
 	          	</div>
+
+	          	<div class="form-group">
+	              	<label for="name">Proposal: [TIDAK USAH DIISI JIKA SUDAH UPLOAD]</label>
+	              	<input type="file" class="form-control-file" name="proposal" value="{{ $events->proposal }}" />
+	          	</div>
+
+	          	<input type="hidden" name="approval" value="{{ $events->approval }}">
 
 	          	<button type="submit" class="btn btn-primary">Simpan Data</button>
 	      	</form>

@@ -16,7 +16,7 @@
       </div><br />
     @endif
       	<div class="container">
-  			<form method="post" action="{{ route('events.store') }}">
+  			<form method="post" action="{{ route('events.store') }}" enctype="multipart/form-data">
 				{{-- PROTECTION TOKEN --}}
 	      		@csrf
 	      		{{-- PROTECTION TOKEN --}}
@@ -63,6 +63,13 @@
 	              	<label for="name">Tujuan:</label>
 	              	<input type="text" class="form-control" name="tujuan" required/>
 	          	</div>
+
+	          	<div class="form-group">
+	              	<label for="name">Proposal:</label>
+	              	<input type="file" class="form-control-file" name="proposal" required/>
+	          	</div>
+
+	          	<input type="hidden" name="approval" value="BELUM DISETUJUI">
 
 	          	<button type="submit" class="btn btn-primary">Simpan Data</button>
 	      	</form>
