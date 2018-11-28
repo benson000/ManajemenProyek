@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Nov 2018 pada 05.27
+-- Waktu pembuatan: 24 Nov 2018 pada 09.03
 -- Versi server: 10.1.34-MariaDB
 -- Versi PHP: 7.2.8
 
@@ -58,12 +58,20 @@ INSERT INTO `activities` (`id`, `id_events`, `name`, `start_date`, `end_date`, `
 
 CREATE TABLE `budgets` (
   `id` int(10) UNSIGNED NOT NULL,
-  `id_events` int(11) NOT NULL,
+  `id_events` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keterangan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `saldo` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `budgets`
+--
+
+INSERT INTO `budgets` (`id`, `id_events`, `keterangan`, `saldo`, `created_at`, `updated_at`) VALUES
+(2, 'SI0002', 'Pemberdayaan Mahasiswa Fakultas Ilmu Komputer', 6500000, '2018-11-19 07:07:08', '2018-11-19 07:11:49'),
+(3, 'SI0001', 'Biaya bis luar', 550000, '2018-11-19 07:12:08', '2018-11-19 07:12:14');
 
 -- --------------------------------------------------------
 
@@ -78,6 +86,15 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `categories`
+--
+
+INSERT INTO `categories` (`id`, `nama`, `created_at`, `updated_at`) VALUES
+(1, 'Self-Improvement', NULL, NULL),
+(2, 'Ujian Kelulusan', NULL, '2018-11-19 06:46:46'),
+(4, 'Penilaian Umum', '2018-11-19 06:47:19', '2018-11-19 06:47:26');
+
 -- --------------------------------------------------------
 
 --
@@ -86,13 +103,23 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `committees` (
   `id` int(10) UNSIGNED NOT NULL,
-  `id_events` int(11) NOT NULL,
+  `id_events` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `jabatan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `id_user` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggung_jawab` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `committees`
+--
+
+INSERT INTO `committees` (`id`, `id_events`, `jabatan`, `id_user`, `password`, `nama`, `tanggung_jawab`, `created_at`, `updated_at`) VALUES
+(1, 'SI0001', 'Ketua', 'dummy1', 'qwerty', 'Jorgy Peterson', 'Mengkoordinasikan semua panitia', '2018-11-19 07:40:14', '2018-11-19 07:40:14'),
+(2, 'SI0001', 'Wakil Ketua', 'dummy2', 'qwerty', 'Catharina Evelyn', 'Membantu ketua', '2018-11-19 07:40:53', '2018-11-19 07:42:04');
 
 -- --------------------------------------------------------
 
@@ -109,15 +136,20 @@ CREATE TABLE `events` (
   `place` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `theme` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tujuan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `tujuan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `approval` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `proposal` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `events`
 --
 
-INSERT INTO `events` (`id`, `id_events`, `name`, `start_date`, `end_date`, `place`, `theme`, `category`, `tujuan`) VALUES
-(1, 'SI0001', 'PTMB Fakultas', '2018-11-20', '2018-11-21', 'Gedung HC8', 'Change The Future', 'Self-Improvement', 'Menyiapkan mahasiswa baru dengan lingkungan kampus');
+INSERT INTO `events` (`id`, `id_events`, `name`, `start_date`, `end_date`, `place`, `theme`, `category`, `tujuan`, `approval`, `proposal`, `updated_at`, `created_at`) VALUES
+(1, 'SI0001', 'PTMB Fakultas', '2018-11-20', '2018-11-21', 'Gedung HC8', 'Change The Future For Us', 'Self-Improvement', 'Menyiapkan mahasiswa baru dengan lingkungan kampus', 'DISETUJUI', 'exemple03.pdf.pdf', '2018-11-21 22:43:17', '0000-00-00 00:00:00'),
+(2, 'SI0002', 'Dies Natalis IKOM', '2018-11-05', '2018-11-05', 'HC Lantai 8', 'Digital or Real', 'Self-Improvement', 'Memperingati hari lahir jurusan ikom', 'BELUM  DISETUJUI', 'subnetwork  [Autosaved].pdf', '2018-11-21 22:57:16', '2018-11-19 06:27:39');
 
 -- --------------------------------------------------------
 
@@ -153,12 +185,22 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `participants` (
   `id` int(10) UNSIGNED NOT NULL,
-  `id_events` int(11) NOT NULL,
+  `id_events` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_peserta` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keterangan` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `participants`
+--
+
+INSERT INTO `participants` (`id`, `id_events`, `id_peserta`, `password`, `nama`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 'SI0001', '16.N1.0018', 'qwerty', 'Simeon Bensona', 'Istirahat', '2018-11-19 08:00:42', '2018-11-19 08:00:42'),
+(2, 'SI0001', '16.N1.0017', 'qwerty', 'Jin Kaza', 'Lelah Banget', '2018-11-19 08:01:18', '2018-11-19 08:03:33');
 
 -- --------------------------------------------------------
 
@@ -195,7 +237,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `type`, `nim`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Simeon Bensona', 'sbensona77@gmail.com', NULL, NULL, '$2y$10$edP36qAVhfGDirtgH1pTGO11ce79cUfGXSBYp3dgKnNqM.CJyeu6u', 'EIvkmBtVdW5YBPSKDV4nUQtdQg4EtBDxNVkvoEn3zWkMX3fEaiRBO9t1lvcH', '2018-09-12 22:26:40', '2018-09-12 22:26:40'),
+(1, 'Simeon Bensona', 'sbensona77@gmail.com', NULL, NULL, '$2y$10$edP36qAVhfGDirtgH1pTGO11ce79cUfGXSBYp3dgKnNqM.CJyeu6u', '6yNnxtG9j8NAC9ysQsQ8WxGwFctKWkpj7wcJuANq4ZXHcAWj7s7MfalkmyJS', '2018-09-12 22:26:40', '2018-09-12 22:26:40'),
 (2, 'Caesar Baroona', 'xxxxxx@test.com', NULL, NULL, '$2y$10$Et06yIkFI9YfkP1N.ECc8ObciTXIjE9082iWeYlQmXe2iJsVmzNE.', 'Svfd95go6ZBmHuVeobS9uTekysc5AALhbca63WQcdie25oK09u0AYjfGywNS', '2018-09-12 22:47:32', '2018-09-12 22:47:32');
 
 --
@@ -271,25 +313,25 @@ ALTER TABLE `activities`
 -- AUTO_INCREMENT untuk tabel `budgets`
 --
 ALTER TABLE `budgets`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `committees`
 --
 ALTER TABLE `committees`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
@@ -301,7 +343,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `participants`
 --
 ALTER TABLE `participants`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

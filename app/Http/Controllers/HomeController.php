@@ -25,4 +25,17 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function admin(Request $req){
+        return view('/admin')->withMessage('Admin');
+    }
+    public function dosen(Request $req){
+        return view('/dosen')->withMessage('Dosen');
+    }
+     public function ormawa(Request $req){
+        return view('/ormawa')->withMessage('Ormawa');
+    }
+    public function mahasiswa(Request $req){
+        return view('/mahasiswa')->withMessage('Mahasiswa');
+    }
 }

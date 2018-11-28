@@ -14,9 +14,9 @@ class CreateEventsTable extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->increments('id'); //hasMany participants, activities, committees
-
-            $table->integer('id_user')->unsigned(); //belongsTo user
+            $table->string('id')->increment();
+            $table->string('id_events')->default(100);//hasMany participants, activities, committees
+            $table->string('name')->default(100);
 
             $table->date('start_date');
             $table->date('end_date');
@@ -25,7 +25,7 @@ class CreateEventsTable extends Migration
             $table->string('theme');
             $table->integer('category'); //belongsTo categories
             $table->string('tujuan');
-            //$table->timestamps()->unsigned();
+            $table->timestamps();
         });
     }
 

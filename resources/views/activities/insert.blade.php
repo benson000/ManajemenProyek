@@ -22,10 +22,10 @@
 	      		{{-- PROTECTION TOKEN --}}
 
 	          	<div class="form-group">
-	              	<label for="name">Kode Aktivitas:</label>
+	              	<label for="name">Kode Event:</label>
 	              	<select class="form-control" name="id_events" required>
 	  					@foreach($events as $key => $event)
-	  						<option value="{{ $event->id_events }}">{{ $event->id_events }}</option>
+	  						<option value="{{ $event->id_events }}">{{ $event->id_events }} - {{ $event->name }}</option>
 	  					@endforeach
 					</select>
 	          	</div>

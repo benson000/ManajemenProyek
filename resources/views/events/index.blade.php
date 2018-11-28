@@ -6,6 +6,10 @@
 		<div class="alert alert-success">
 			{{ session()->get('success') }}  
 		</div><br/>
+	@elseif(session()->get('error'))
+		<div class="alert alert-danger">
+			{{ session()->get('error') }}
+		</div><br/>
 	@endif
 	<div class="row">
 		<table class="table">
@@ -19,9 +23,19 @@
 				<th scope="col">Kategori</th>
 				<th scope="col">Tujuan</th>
 				<th scope="col">Proposal</th>
+				
+				@if(Auth::user()->type == 'a' || Auth::user()->type == 'd')
+				{{-- ADMIN AND DOSEN ONLY --}}
 				<th scope="col">Approval</th>
-
+				
+				@if(Auth::user()->type == 'a')
+				{{-- ADMIN ONLY --}}
 				<th scope="col" colspan="3">Actions</th>
+				{{-- ADMIN ONLY --}}
+				@endif
+
+				{{-- ADMIN AND DOSEN ONLY --}}
+				@endif
 			</thead>
 			<tbody>
 			@foreach($events as $key => $evt)
@@ -34,9 +48,17 @@
 					<td>{{ $evt->theme }}</td>
 					<td>{{ $evt->category }}</td>
 					<td>{{ $evt->tujuan }}</td>
-					<td>{{ $evt->proposal }}</td>
-					<td>{{ $evt->approval }}</td>
 
+					@if(Auth::user()->type == 'a' || Auth::user()->type == 'd')
+
+					{{-- DOWNLOAD PROPOSAL --}}
+					<td>
+						<a href="events/proposal/{{ $evt->proposal }}">Download Proposal</a>
+					</td>
+					<td>{{ $evt->approval }}</td>
+					{{-- DOWNLOAD PROPOSAL --}}
+
+					{{-- ACC --}}
 					<td>
 						<form action="{{ route('events.update', $evt->id) }}" method="post">
 							{{-- PROTECTION TOKEN --}}
@@ -63,24 +85,35 @@
 							} ?>
 						</form>
 					</td>
-					<td>
-						<a href="{{ route('events.edit', $evt->id)}}" class="btn btn-primary">Edit</a>
-					</td>
-					<td>
-						<form action="{{ route('events.destroy', $evt->id) }}" method="post">
-                  			@csrf
-                  			@method('DELETE')
-							<button type="submit" class="btn btn-danger">Delete</button>
-						</form>
-					</td>
+					{{-- ACC --}}
+
+						@if(Auth::user()->type == 'a')
+						{{-- ADMIN ONLY --}}
+						<td>
+							<a href="{{ route('events.edit', $evt->id)}}" class="btn btn-primary">Edit</a>
+						</td>
+						<td>
+							<form action="{{ route('events.destroy', $evt->id) }}" method="post">
+	                  			@csrf
+	                  			@method('DELETE')
+								<button type="submit" class="btn btn-danger">Delete</button>
+							</form>
+						</td>
+						{{-- ADMIN ONLY --}}
+						@endif
+					@endif
 				</tr>
 			@endforeach
 			</tbody>
 		</table>
 
+		@if(Auth::user()->type == 'a' || Auth::user()->type == 'd')
+		{{-- ADD DATA - DOSEN AND ADMIN ONLY --}}
 		<a href="{{ url('events/create') }}">
 			<button class="btn btn-success">Tambahkan Data</button>
 		</a>
+		{{-- ADD DATA - DOSEN AND ADMIN ONLY --}}
+		@endif
 	</div>
 </div>
 @endsection

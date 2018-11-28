@@ -43,15 +43,15 @@
                             <label for="type" class="col-sm-4 col-form-label text-md-right">{{ __('Type') }}</label>
 
                             <div class="col-md-6">
-                                <select type="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }}">
+                                <select name="type" type="type" class="form-control{{ $errors->has('type') ? ' is-invalid' : '' }}">
                                     <option value="m">Mahasiswa</option>
                                     <option value="o">Ormawa</option>
                                     <option value="d">Dosen</option>
                                 </select>
 
-                                @if ($errors->has('nim'))
+                                @if ($errors->has('type'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nim') }}</strong>
+                                        <strong>{{ $errors->first('type') }}</strong>
                                     </span>
                                 @endif
                             </div>

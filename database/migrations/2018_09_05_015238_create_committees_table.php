@@ -15,9 +15,12 @@ class CreateCommitteesTable extends Migration
     {
         Schema::create('committees', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_events'); //belongsTo events
-            $table->string('jabatan');
-            $table->integer('id_user');
+            $table->string('id_events')->default(100); //belongsTo events
+            
+            $table->string('jabatan')->default(100);
+            $table->string('id_user')->default(100);
+            $table->string('nama')->default(100);
+            $table->string('password')->default(256);
             $table->string('tanggung_jawab');
 
             $table->timestamps();

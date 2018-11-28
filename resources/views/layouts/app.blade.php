@@ -39,6 +39,7 @@
                                 {{ __('Aktivitas') }}
                             </a>
                         </li>
+                        @if(Auth::user()->type == 'a' || Auth::user()->type == 'd')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('budgets.index') }}">
                                 {{ __('Budgets') }}
@@ -49,6 +50,7 @@
                                 {{ __('Categories') }}
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('committees.index') }}">
                                 {{ __('Committees') }}

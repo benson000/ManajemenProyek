@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('admin');
-});
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -29,6 +25,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('/budgets', 'BudgetsController');
 	Route::resource('/categories', 'CategoriesController');
 	Route::resource('/committees', 'CommitteesController');
+
+	//download proposal
+	Route::get('/events/proposal/{fileName}', 'EventsController@downloadProposal');
 	Route::resource('/events', 'EventsController');
 	Route::resource('/participants', 'ParticipantsController');
 });

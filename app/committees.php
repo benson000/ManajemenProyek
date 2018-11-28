@@ -14,9 +14,8 @@ class committees extends Model
 
         'jabatan', 
         'id_user',
-        'password',
         'nama',
-
+        'password',
         'tanggung_jawab'
     ];
     protected $hidden = [

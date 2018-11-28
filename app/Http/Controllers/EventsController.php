@@ -184,4 +184,14 @@ class EventsController extends Controller
 
         return redirect('events')->with('success', 'Event sudah berhasil dihapus');
     }
+
+    public function downloadProposal($fileName){
+        $headers = [
+            'Content-Type' => 'application/pdf',
+        ];
+        //PDF file is stored under project/public/download/info.pdf
+        $file= public_path(). "/UploadedFiles/".$fileName;   
+
+        return response()->download($file, $fileName, $headers);
+    }
 }

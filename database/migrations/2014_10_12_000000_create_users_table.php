@@ -22,9 +22,9 @@ class CreateUsersTable extends Migration
             //mahasiswa = m, 
             //admin = a, 
             //manager = u
-            $table->char('type');
+            $table->string('type')->default(100);
             //nim
-            $table->string('nim');
+            $table->string('nim')->default(100);
             //added manually
 
             $table->string('password');

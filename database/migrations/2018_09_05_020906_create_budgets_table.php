@@ -15,7 +15,7 @@ class CreateBudgetsTable extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_events'); //hasMany events
+            $table->string('id_events')->default(100); //hasMany events
             $table->string('keterangan');
             $table->double('saldo');
             $table->timestamps();
