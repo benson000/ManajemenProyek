@@ -1,2 +1,2 @@
 # ManajemenProyek
-Kontlo
+Sebuah pembelajaran kehidupan dari tugas satu semester
